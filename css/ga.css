@@ -1,0 +1,22 @@
+.table-cell-padding-right {
+	padding-right: 8px;
+}
+
+.width-auto {
+	width: auto
+}
+
+.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+
+.loader {
+	position: fixed;
+	width: 100%;
+	z-index: 1000;
+}
+
+.transparent {
+	background-color: transparent !important;
+}

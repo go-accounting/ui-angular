@@ -1,0 +1,61 @@
+<form class="form-horizontal" role="form">
+  <div class="form-group">
+  	<label class="col-sm-2 text-right" for="number">#</label>
+  	<div class="col-sm-2">
+  		<input type="text" class="form-control" id="number" autofocus ng-model="account.number">
+  	</div>
+  </div>
+  <div class="form-group">
+  	<label class="col-sm-2 text-right" for="name">Nome:</label>
+  	<div class="col-sm-6">
+  		<input type="text" class="form-control" id="name" ng-model="account.name">
+  	</div>
+  </div>
+  <div class="form-group">
+  	<label class="col-sm-2 text-right" for="parent">Pai:</label>
+  	<div class="col-sm-2">
+  		<input type="text" class="form-control" id="parent" ng-model="account.parent" account-typeahead>
+  	</div>
+  </div>
+  <fieldset class="col-sm-offset-2">
+    <legend>Classificação</legend>
+    <div class="radio">
+      <label>
+        <input type="radio" name="financialStatement" id="balanceSheet" value="balanceSheet" ng-model="financialStatement">
+        Patrimonial
+      </label>
+    </div>    
+    <div class="radio">
+      <label>
+        <input type="radio" name="financialStatement" id="incomeStatement" value="incomeStatement" ng-model="financialStatement">
+        De Resultado
+      </label>
+    </div>
+    <div class="form-group">
+      <br>
+      <select class="form-control col-xs-offset-1 width-auto" ng-model="incomeStatementAttribute" ng-disabled="financialStatement!='incomeStatement'" ng-options="a.name for a in incomeStatementAttributes track by a.value">
+      </select>
+    </div>
+    <br>
+  </fieldset>
+  <fieldset class="col-sm-offset-2">
+    <legend>Natureza do saldo</legend>
+    <div class="radio">
+      <label>
+        <input type="radio" name="balanceNature" id="increaseOnDebit" value="increaseOnDebit" ng-model="balanceNature">
+        Devedora
+      </label>
+    </div>    
+    <div class="radio">
+      <label>
+        <input type="radio" name="balanceNature" id="increaseOnCredit" value="increaseOnCredit" ng-model="balanceNature">
+        Credora
+      </label>
+    </div>
+    <br>
+  </fieldset>
+  <div class="col-sm-offset-2">
+  	<button class="btn btn-default" ng-click="save()">Salvar</button>
+    <button class="btn btn-danger" ng-click="remove()" ng-show="accountId()">Excluir</button>
+  </div>
+</form>

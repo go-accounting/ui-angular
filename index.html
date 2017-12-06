@@ -1,0 +1,93 @@
+<!doctype html>
+<html ng-app="ga" lang="pt-BR">
+
+  <head>
+  	<meta charset="utf-8">
+  	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+  	<title>Go Accounting</title>
+
+  	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css">
+  	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/typeahead.css">
+    <link rel="stylesheet" href="css/ga.css">
+  </head>
+
+  <body>
+
+    <div id="loadingWidget" class="row-fluid ui-corner-all text-center loader" loader>
+      <h4><span class="label label-danger">Carregando...</span></h4>
+    </div>
+
+    <div class="container-fluid">
+      <div ng-controller="NavigatorCtrl" ng-show="isLoggedIn()">
+        <!-- Static navbar -->
+        <div class="navbar navbar-default" role="navigation">
+          <div class="container-fluid">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#/charts-of-accounts/{{currentChartOfAccounts._id}}/balance-sheet">Contabilidade</a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li>
+                  <form class="navbar-form navbar-left" role="search">
+                    <select class="form-control" ng-model="currentChartOfAccounts" ng-options="coa.name for coa in chartsOfAccounts track by coa._id">
+                    </select>
+                  </form>
+                </li>
+                <li ng-class="{active: routeIs('balance-sheet$')}">
+                  <a href="#/charts-of-accounts/{{currentChartOfAccounts._id}}/balance-sheet">Balanço</a>
+                </li>
+                <li ng-class="{active: routeIs('income-statement$')}">
+                  <a href="#/charts-of-accounts/{{currentChartOfAccounts._id}}/income-statement">DRE</a>
+                </li>
+                <li ng-class="{active: routeIs('ledger$')}" ng-if="routeIs(['ledger'])">
+                  <a href="">Razão</a>
+                </li>
+                <li ng-class="{active: routeIs('journal$')}">
+                  <a href="#/charts-of-accounts/{{currentChartOfAccounts._id}}/journal">Diário</a>
+                </li>
+                <li ng-class="{active: routeIs('accounts$')}">
+                  <a href="#/charts-of-accounts/{{currentChartOfAccounts._id}}/accounts">Plano de Contas</a>
+                </li>
+                <li class="dropdown" ng-class="{active: routeIs('transaction$|transactions\/[^\/]+$|account$|accounts\/[^\/]+$|password$|user$|users\/[^\/]+$')}">
+                  <a href="" class="dropdown-toggle" data-toggle="dropdown">Ações {{actionLabel()}}<b class="caret"></b></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="#/charts-of-accounts/{{currentChartOfAccounts._id}}/transaction">Lançamento</a></li>
+                    <li><a href="#/charts-of-accounts/{{currentChartOfAccounts._id}}/account">Nova conta</a></li>
+                  </ul>
+                </li>
+              </ul>
+            </div><!--/.nav-collapse -->
+          </div><!--/.container-fluid -->
+        </div>
+        <div ng-show="errorMessage">
+          <div class="alert alert-danger">
+            {{errorMessage}}
+          </div>
+        </div>
+      </div>
+
+      <div ng-view></div>
+
+    </div>
+
+  	<script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+  	<script src="https://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular.min.js"></script>
+  	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.11/angular-resource.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.2.10/angular-locale_pt-br.js"></script>
+    <script src="https://cdn.jsdelivr.net/typeahead.js/0.10.1/typeahead.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.5.1/moment.min.js"></script>
+  	<script src="js/ga.js"></script>
+
+  </body>
+</html>
