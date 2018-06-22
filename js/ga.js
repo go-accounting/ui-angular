@@ -595,7 +595,7 @@ var TransactionCtrl = function ($scope, $rootScope, $routeParams, $window, GaSer
     }
     if (!$scope.debit && !$scope.credit) {
       if ($scope.debitsSum() === $scope.creditsSum()) {
-        $scope.$broadcast("error_message", "Ou o débito ou o crédito deve ser informado");
+        $rootScope.$broadcast("error_message", "Ou o débito ou o crédito deve ser informado");
         return;
       } else if ($scope.debitsSum() > $scope.creditsSum()) {
         $scope.credit = $scope.debitsSum() - $scope.creditsSum();
@@ -620,14 +620,15 @@ var TransactionCtrl = function ($scope, $rootScope, $routeParams, $window, GaSer
       for (var i = 0; i < accounts.length; i++) {
         if (accounts[i].number === entry.e.account) {
           entry.account = accounts[i];
+          let transactionEntries
           if (isDebit) {
-            entries = $scope.transaction.debits
+            transactionEntries = $scope.transaction.debits
           } else {
-            entries = $scope.transaction.credits
+            transactionEntries = $scope.transaction.credits
           }
-          e = entries.pop()
+          let e = transactionEntries.pop()
           e.account = accounts[i]._id
-          entries.push(e)
+          transactionEntries.push(e)
         }
     }});
     $scope.entries.push(entry);
@@ -635,9 +636,9 @@ var TransactionCtrl = function ($scope, $rootScope, $routeParams, $window, GaSer
   };
   $scope.removeEntry = function (index) {
     function removeOnTransaction (col) {
-      var i;
-      for (i = 0; i < col.length; i += 1) {
-        if (col[i].account === $scope.entries[index].e.account && col[i].value === $scope.entries[index].e.value) {
+      for (let i = 0; i < col.length; i += 1) {
+        if (col[i].account === $scope.entries[index].account._id &&
+            col[i].value === $scope.entries[index].e.value) {
           col.splice(i, 1);
           return
         }
