@@ -618,7 +618,9 @@ var TransactionCtrl = function ($scope, $rootScope, $routeParams, $window, GaSer
     }
     var accounts = GaServer.accounts({coa: $routeParams.coa}, function () {
       for (var i = 0; i < accounts.length; i++) {
-        if (accounts[i].number === entry.e.account) {
+        if (accounts[i]._id === entry.e.account) {
+          entry.account = accounts[i]
+        } else if (accounts[i].number === entry.e.account) {
           entry.account = accounts[i];
           let transactionEntries
           if (isDebit) {
